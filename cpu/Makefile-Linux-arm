@@ -1,0 +1,32 @@
+CC = g++
+LD = $(CC)
+
+VER = 23_7_5
+
+APP = ap26_cpu_linux64_$(VER)
+
+SRC = AP26.cpp
+OBJ = AP26.o cpuasimd.o
+
+BOINC_DIR = /home/bryan/boinc
+BOINC_INC = -I$(BOINC_DIR)/lib -I$(BOINC_DIR)/api -I$(BOINC_DIR)
+BOINC_LIB = -L$(BOINC_DIR)/lib -L$(BOINC_DIR)/api -L$(BOINC_DIR) -lboinc_api -lboinc -lstdc++ -ldl
+
+DFLAGS =
+CFLAGS = -I . -O3 -m64 -DVERS=\"$(VER)\"
+LDFLAGS = $(CFLAGS) -static
+
+all : $(APP)
+
+$(APP) : $(OBJ)
+        $(LD) $(LDFLAGS) $^ $(BOINC_LIB) -o $@
+
+AP26.o : $(SRC)
+        $(CC) $(DFLAGS) $(CFLAGS) $(BOINC_INC) -c -o $@ AP26.cpp
+
+cpuasimd.o : cpuasimd.cpp
+        $(CC) $(DFLAGS) $(CFLAGS) -c -o $@ $^
+
+clean :
+        rm -f *.o $(APP)
+

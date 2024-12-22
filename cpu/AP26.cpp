@@ -14,8 +14,9 @@
 
 #include "mainconst.h"
 
-#define EXIT_SUCCESS 0
-#define EXIT_FAILURE 1
+#include <cstdlib>
+// #define EXIT_SUCCESS 0
+// #define EXIT_FAILURE 1
 
 // a bit less than 32bit signed int max
 #define MAXINTV 2000000000
@@ -654,7 +655,11 @@ int main(int argc, char *argv[])
 	/* Get search parameters from command line */
 	if(argc < 4){
 		printf("Usage: %s KMIN KMAX SHIFT -cputype -t #\n",argv[0]);
-		printf("-cputype is used to force an instruction set. Valid types: -sse2 -sse41 -avx -avx2 -avx512. Default is highest available.\n");
+		#if defined(__aarch64__)
+		  printf("-cputype is used to force an instruction set. Valid types: -asimd. Default is highest available.\n");
+		#else
+		  printf("-cputype is used to force an instruction set. Valid types: -sse2 -sse41 -avx -avx2 -avx512. Default is highest available.\n");
+        #endif
 		printf("-t # or --nthreads # is optional number of threads to use. Default is 1. Max is 64.\n");
 
 		exit(EXIT_FAILURE);
@@ -664,41 +669,48 @@ int main(int argc, char *argv[])
 	sscanf(argv[2],"%d",&KMAX);
 	sscanf(argv[3],"%d",&SHIFT);
 
-	int sse41 = __builtin_cpu_supports("sse4.1");
-	int avx = __builtin_cpu_supports("avx");
-	int avx2 = __builtin_cpu_supports("avx2");
-	int avx512 = __builtin_cpu_supports("avx512bw") && __builtin_cpu_supports("avx512vl");
+    #if defined(__aarch64__)
+		if(boinc_is_standalone()){
+			printf("Assumed asimd CPU\n");
+		  }
+		fprintf(stderr, "Assumed asimd CPU\n");
+	#else
+	  int sse41 = __builtin_cpu_supports("sse4.1");
+	  int avx = __builtin_cpu_supports("avx");
+	  int avx2 = __builtin_cpu_supports("avx2");
+	  int avx512 = __builtin_cpu_supports("avx512bw") && __builtin_cpu_supports("avx512vl");
 
-	if(avx512){
-		if(boinc_is_standalone()){
-			printf("Detected avx512 CPU\n");
-		}
-		fprintf(stderr, "Detected avx512 CPU\n");
-	}
-	else if(avx2){
-		if(boinc_is_standalone()){
-			printf("Detected avx2 CPU\n");
-		}
-		fprintf(stderr, "Detected avx2 CPU\n");
-	}
-	else if(avx){
-		if(boinc_is_standalone()){
-			printf("Detected avx CPU\n");
-		}
-		fprintf(stderr, "Detected avx CPU\n");
-	}
-	else if(sse41){
-		if(boinc_is_standalone()){
-			printf("Detected sse4.1 CPU\n");
-		}
-		fprintf(stderr, "Detected sse4.1 CPU\n");		
-	}
-	else{
-		if(boinc_is_standalone()){
-			printf("Assumed sse2 CPU\n");
-		}
-		fprintf(stderr, "Assumed sse2 CPU\n");
-	}
+  	  if(avx512){
+		  if(boinc_is_standalone()){
+			  printf("Detected avx512 CPU\n");
+		  }
+		  fprintf(stderr, "Detected avx512 CPU\n");
+	  }
+	  else if(avx2){
+		  if(boinc_is_standalone()){
+			  printf("Detected avx2 CPU\n");
+		  }
+		  fprintf(stderr, "Detected avx2 CPU\n");
+	  }
+	  else if(avx){
+		  if(boinc_is_standalone()){
+			  printf("Detected avx CPU\n");
+		  }
+		  fprintf(stderr, "Detected avx CPU\n");
+	  }
+	  else if(sse41){
+		  if(boinc_is_standalone()){
+			  printf("Detected sse4.1 CPU\n");
+		  }
+		  fprintf(stderr, "Detected sse4.1 CPU\n");		
+	  }
+	  else{
+		  if(boinc_is_standalone()){
+			  printf("Assumed sse2 CPU\n");
+		  }
+		  fprintf(stderr, "Assumed sse2 CPU\n");
+	  }
+	#endif
 
 	if(argc > 4){
 		for(int xv=4;xv<argc;xv++){
@@ -749,6 +761,7 @@ int main(int argc, char *argv[])
 					
 				num_threads = NT;
 			}
+		#if !defined(__aarch64__)
 			else if( strcmp(argv[xv], "-sse2") == 0 ){
 				if(boinc_is_standalone()){
 					printf("forcing sse2 mode\n");
@@ -827,6 +840,7 @@ int main(int argc, char *argv[])
 				avx2 = 0;
 				avx512 = 1;
 			}
+		#endif
 		}
 	}
 
@@ -886,21 +900,25 @@ int main(int argc, char *argv[])
 
 			checkpoint(SHIFT,K,0);
 
-			if(avx512){
-				Search_avx512(K, SHIFT, K_COUNT, K_DONE, num_threads);
-			}
-			else if(avx2){
-				Search_avx2(K, SHIFT, K_COUNT, K_DONE, num_threads);
-			}
-			else if(avx){
-				Search_avx(K, SHIFT, K_COUNT, K_DONE, num_threads);
-			}
-			else if(sse41){
-				Search_sse41(K, SHIFT, K_COUNT, K_DONE, num_threads);
-			}
-			else{
-				Search_sse2(K, SHIFT, K_COUNT, K_DONE, num_threads);
-			}
+			#if defined(__aarch64__)
+            	Search_asimd(K, SHIFT, K_COUNT, K_DONE, num_threads);
+			#else
+				if(avx512){
+					Search_avx512(K, SHIFT, K_COUNT, K_DONE, num_threads);
+				}
+				else if(avx2){
+					Search_avx2(K, SHIFT, K_COUNT, K_DONE, num_threads);
+				}
+				else if(avx){
+					Search_avx(K, SHIFT, K_COUNT, K_DONE, num_threads);
+				}
+				else if(sse41){
+					Search_sse41(K, SHIFT, K_COUNT, K_DONE, num_threads);
+				}
+				else{
+					Search_sse2(K, SHIFT, K_COUNT, K_DONE, num_threads);
+				}
+			#endif
 
 		 	K_DONE++;
 		}
@@ -911,7 +929,11 @@ int main(int argc, char *argv[])
 	boinc_fraction_done(1.0);
 	checkpoint(SHIFT,K,1);
 	write_cksum();
-	fprintf(stderr,"Workunit complete.  Number of AP10+ found %u\n", totalaps);
+	if(boinc_is_standalone()) {
+		printf("Workunit complete.  Number of AP10+ found %u\n", totalaps);
+	} else {
+		fprintf(stderr,"Workunit complete.  Number of AP10+ found %u\n", totalaps);
+	}
 	boinc_end_critical_section();
 
 	free(n43_h);
