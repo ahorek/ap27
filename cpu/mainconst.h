@@ -1,10 +1,14 @@
 // mainconst.h
 
-extern void Search_avx512(int K, int startSHIFT, int K_COUNT, int K_DONE, int threads);
-extern void Search_avx2(int K, int startSHIFT, int K_COUNT, int K_DONE, int threads);
-extern void Search_avx(int K, int startSHIFT, int K_COUNT, int K_DONE, int threads);
-extern void Search_sse41(int K, int startSHIFT, int K_COUNT, int K_DONE, int threads);
-extern void Search_sse2(int K, int startSHIFT, int K_COUNT, int K_DONE, int threads);
+#if defined(__aarch64__)
+  extern void Search_asimd(int K, int startSHIFT, int K_COUNT, int K_DONE, int threads);
+#else
+  extern void Search_avx512(int K, int startSHIFT, int K_COUNT, int K_DONE, int threads);
+  extern void Search_avx2(int K, int startSHIFT, int K_COUNT, int K_DONE, int threads);
+  extern void Search_avx(int K, int startSHIFT, int K_COUNT, int K_DONE, int threads);
+  extern void Search_sse41(int K, int startSHIFT, int K_COUNT, int K_DONE, int threads);
+  extern void Search_sse2(int K, int startSHIFT, int K_COUNT, int K_DONE, int threads);
+#endif
 
 #define numn43s	10840
 

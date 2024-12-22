@@ -2,10 +2,14 @@
 
 extern uint64_t *n43_h;
 
-extern __m128i svec1, svec2, mvec1, mvec2, numvec1_1, numvec2_1, numvec1_2, numvec2_2;
-extern __m256i svec, mvec, numvec1, numvec2;
+#if defined(__aarch64__)
+  int64x2_t svec1, svec2, mvec1, mvec2, numvec1_1, numvec2_1, numvec1_2, numvec2_2;
+#else
+  extern __m128i svec1, svec2, mvec1, mvec2, numvec1_1, numvec2_1, numvec1_2, numvec2_2;
+  extern __m256i svec, mvec, numvec1, numvec2;
+#endif
 
-
+#if !defined(__aarch64__)
 extern char OK61[61];
 extern char OK67[67];
 extern char OK71[71];
@@ -175,6 +179,7 @@ extern __m256d xOKOK263[263];
 extern __m256d xOKOK269[269];
 extern __m256d xOKOK271[271];
 extern __m256d xOKOK277[277];
+#endif
 
 
 /////////////////////////////
