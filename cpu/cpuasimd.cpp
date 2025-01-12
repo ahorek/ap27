@@ -94,52 +94,52 @@ char OK521[521];
 char OK523[523];
 char OK541[541];
 
-uint64x2_t ixOKOK61[61];
-uint64x2_t ixOKOK67[67];
-uint64x2_t ixOKOK71[71];
-uint64x2_t ixOKOK73[73];
-uint64x2_t ixOKOK79[79];
-uint64x2_t ixOKOK83[83];
-uint64x2_t ixOKOK89[89];
-uint64x2_t ixOKOK97[97];
-uint64x2_t ixOKOK101[101];
-uint64x2_t ixOKOK103[103];
-uint64x2_t ixOKOK107[107];
-uint64x2_t ixOKOK109[109];
-uint64x2_t ixOKOK113[113];
-uint64x2_t ixOKOK127[127];
-uint64x2_t ixOKOK131[131];
-uint64x2_t ixOKOK137[137];
-uint64x2_t ixOKOK139[139];
-uint64x2_t ixOKOK149[149];
-uint64x2_t ixOKOK151[151];
-uint64x2_t ixOKOK157[157];
-uint64x2_t ixOKOK163[163];
-uint64x2_t ixOKOK167[167];
-uint64x2_t ixOKOK173[173];
-uint64x2_t ixOKOK179[179];
-uint64x2_t ixOKOK181[181];
-uint64x2_t ixOKOK191[191];
-uint64x2_t ixOKOK193[193];
-uint64x2_t ixOKOK197[197];
-uint64x2_t ixOKOK199[199];
-uint64x2_t ixOKOK211[211];
-uint64x2_t ixOKOK223[223];
-uint64x2_t ixOKOK227[227];
-uint64x2_t ixOKOK229[229];
-uint64x2_t ixOKOK233[233];
-uint64x2_t ixOKOK239[239];
-uint64x2_t ixOKOK241[241];
-uint64x2_t ixOKOK251[251];
-uint64x2_t ixOKOK257[257];
-uint64x2_t ixOKOK263[263];
-uint64x2_t ixOKOK269[269];
-uint64x2_t ixOKOK271[271];
-uint64x2_t ixOKOK277[277];
+int16x8_t ixOKOK61[61];
+int16x8_t ixOKOK67[67];
+int16x8_t ixOKOK71[71];
+int16x8_t ixOKOK73[73];
+int16x8_t ixOKOK79[79];
+int16x8_t ixOKOK83[83];
+int16x8_t ixOKOK89[89];
+int16x8_t ixOKOK97[97];
+int16x8_t ixOKOK101[101];
+int16x8_t ixOKOK103[103];
+int16x8_t ixOKOK107[107];
+int16x8_t ixOKOK109[109];
+int16x8_t ixOKOK113[113];
+int16x8_t ixOKOK127[127];
+int16x8_t ixOKOK131[131];
+int16x8_t ixOKOK137[137];
+int16x8_t ixOKOK139[139];
+int16x8_t ixOKOK149[149];
+int16x8_t ixOKOK151[151];
+int16x8_t ixOKOK157[157];
+int16x8_t ixOKOK163[163];
+int16x8_t ixOKOK167[167];
+int16x8_t ixOKOK173[173];
+int16x8_t ixOKOK179[179];
+int16x8_t ixOKOK181[181];
+int16x8_t ixOKOK191[191];
+int16x8_t ixOKOK193[193];
+int16x8_t ixOKOK197[197];
+int16x8_t ixOKOK199[199];
+int16x8_t ixOKOK211[211];
+int16x8_t ixOKOK223[223];
+int16x8_t ixOKOK227[227];
+int16x8_t ixOKOK229[229];
+int16x8_t ixOKOK233[233];
+int16x8_t ixOKOK239[239];
+int16x8_t ixOKOK241[241];
+int16x8_t ixOKOK251[251];
+int16x8_t ixOKOK257[257];
+int16x8_t ixOKOK263[263];
+int16x8_t ixOKOK269[269];
+int16x8_t ixOKOK271[271];
+int16x8_t ixOKOK277[277];
 
 
 // true if any element is not zero
-#define continue_sito(_X) (vgetq_lane_u64(_X, 0) || vgetq_lane_u64(_X, 1))
+#define continue_sito(_X) (vgetq_lane_s16(_X, 0) || vgetq_lane_s16(_X, 1))
 
 #define MAKE_OK(_X) \
   for(j=0;j<_X;j++) \
@@ -154,11 +154,11 @@ uint64x2_t ixOKOK277[277];
     sOKOK[1]=0; \
     for(jj=0;jj<64;jj++){ \
       if(SHIFT < maxshift) \
-        sOKOK[0]|=(((uint64_t)OK##_X[(j+(jj+SHIFT)*MOD)%_X])<<jj); \
+        sOKOK[0]|=(((int16_t)OK##_X[(j+(jj+SHIFT)*MOD)%_X])<<jj); \
       if(SHIFT+64 < maxshift) \
-        sOKOK[1]|=(((uint64_t)OK##_X[(j+(jj+SHIFT+64)*MOD)%_X])<<jj); \
+        sOKOK[1]|=(((int16_t)OK##_X[(j+(jj+SHIFT+64)*MOD)%_X])<<jj); \
     } \
-    ixOKOK##_X[j] = vld1q_u64( (uint64_t*)sOKOK ); \
+    ixOKOK##_X[j] = vld1q_s16( (int16_t*)sOKOK ); \
   }
 
 
@@ -171,7 +171,7 @@ void *thr_func_asimd(void *arg) {
     uint64_t sito[2] __attribute__ ((aligned (16)));
     int16_t rems[8] __attribute__ ((aligned (16)));
     int16_t rrems[8] __attribute__ ((aligned (16)));
-    const uint64x2_t ZERO128 = vdupq_n_u64(0);
+    const int16x8_t ZERO128 = vdupq_n_s16(0);
     uint32_t checksum = 0;
     uint32_t apcount = 0;
 
@@ -223,65 +223,65 @@ void *thr_func_asimd(void *arg) {
 			rrems[5] = REM(n59,127,7);
 			rrems[6] = REM(n59,131,8);
 			rrems[7] = REM(n59,137,8);
-			uint64x2_t r_numvec1 = vld1q_u64( (uint64_t*)rems);
-			uint64x2_t r_numvec2 = vld1q_u64( (uint64_t*)rrems);
+			int16x8_t r_numvec1 = vld1q_s16( (int16_t*)rems);
+			int16x8_t r_numvec2 = vld1q_s16( (int16_t*)rrems);
 
 			for(i59=(PRIME8-24);i59>0;i59--){
 			    
 			    if(i59 < 35){
-				vst1q_u64( (uint64_t*)rems, r_numvec1);
-				vst1q_u64( (uint64_t*)rrems, r_numvec2);
+				vst1q_s16( (int16x8_t*)rems, r_numvec1);
+				vst1q_s16( (int16x8_t*)rrems, r_numvec2);
 			    }								
 
-			    uint64x2_t isito = vandq_u64( ixOKOK61[rems[0]], ixOKOK67[rems[1]] );
-			    isito = vandq_u64( isito, ixOKOK71[rems[2]] );
-			    isito = vandq_u64( isito, ixOKOK73[rems[3]] );
-			    isito = vandq_u64( isito, ixOKOK79[rems[4]] );
-			    isito = vandq_u64( isito, ixOKOK83[rems[5]] );
-			    isito = vandq_u64( isito, ixOKOK89[rems[6]] );
-			    isito = vandq_u64( isito, ixOKOK97[rems[7]] );
-			    isito = vandq_u64( isito, ixOKOK101[rrems[0]] );
-			    isito = vandq_u64( isito, ixOKOK103[rrems[1]] );
-			    isito = vandq_u64( isito, ixOKOK107[rrems[2]] );
-			    isito = vandq_u64( isito, ixOKOK109[rrems[3]] );
-			    isito = vandq_u64( isito, ixOKOK113[rrems[4]] );
-			    isito = vandq_u64( isito, ixOKOK127[rrems[5]] );
-			    isito = vandq_u64( isito, ixOKOK131[rrems[6]] );
-			    isito = vandq_u64( isito, ixOKOK137[rrems[7]] );
+			    uint16x8_t isito = vandq_s16( ixOKOK61[rems[0]], ixOKOK67[rems[1]] );
+			    isito = vandq_s16( isito, ixOKOK71[rems[2]] );
+			    isito = vandq_s16( isito, ixOKOK73[rems[3]] );
+			    isito = vandq_s16( isito, ixOKOK79[rems[4]] );
+			    isito = vandq_s16( isito, ixOKOK83[rems[5]] );
+			    isito = vandq_s16( isito, ixOKOK89[rems[6]] );
+			    isito = vandq_s16( isito, ixOKOK97[rems[7]] );
+			    isito = vandq_s16( isito, ixOKOK101[rrems[0]] );
+			    isito = vandq_s16( isito, ixOKOK103[rrems[1]] );
+			    isito = vandq_s16( isito, ixOKOK107[rrems[2]] );
+			    isito = vandq_s16( isito, ixOKOK109[rrems[3]] );
+			    isito = vandq_s16( isito, ixOKOK113[rrems[4]] );
+			    isito = vandq_s16( isito, ixOKOK127[rrems[5]] );
+			    isito = vandq_s16( isito, ixOKOK131[rrems[6]] );
+			    isito = vandq_s16( isito, ixOKOK137[rrems[7]] );
 			    if( continue_sito(isito) ){
-				isito = vandq_u64( isito, ixOKOK139[REM(n59,139,8)] );
-				isito = vandq_u64( isito, ixOKOK149[REM(n59,149,8)] );
-				isito = vandq_u64( isito, ixOKOK151[REM(n59,151,8)] );
-				isito = vandq_u64( isito, ixOKOK157[REM(n59,157,8)] );
-				isito = vandq_u64( isito, ixOKOK163[REM(n59,163,8)] );
-				isito = vandq_u64( isito, ixOKOK167[REM(n59,167,8)] );
-				isito = vandq_u64( isito, ixOKOK173[REM(n59,173,8)] );
-				isito = vandq_u64( isito, ixOKOK179[REM(n59,179,8)] );
-				isito = vandq_u64( isito, ixOKOK181[REM(n59,181,8)] );
-				isito = vandq_u64( isito, ixOKOK191[REM(n59,191,8)] );
-				isito = vandq_u64( isito, ixOKOK193[REM(n59,193,8)] );
-				isito = vandq_u64( isito, ixOKOK197[REM(n59,197,8)] );
-				isito = vandq_u64( isito, ixOKOK199[REM(n59,199,8)] );
+				isito = vandq_s16( isito, ixOKOK139[REM(n59,139,8)] );
+				isito = vandq_s16( isito, ixOKOK149[REM(n59,149,8)] );
+				isito = vandq_s16( isito, ixOKOK151[REM(n59,151,8)] );
+				isito = vandq_s16( isito, ixOKOK157[REM(n59,157,8)] );
+				isito = vandq_s16( isito, ixOKOK163[REM(n59,163,8)] );
+				isito = vandq_s16( isito, ixOKOK167[REM(n59,167,8)] );
+				isito = vandq_s16( isito, ixOKOK173[REM(n59,173,8)] );
+				isito = vandq_s16( isito, ixOKOK179[REM(n59,179,8)] );
+				isito = vandq_s16( isito, ixOKOK181[REM(n59,181,8)] );
+				isito = vandq_s16( isito, ixOKOK191[REM(n59,191,8)] );
+				isito = vandq_s16( isito, ixOKOK193[REM(n59,193,8)] );
+				isito = vandq_s16( isito, ixOKOK197[REM(n59,197,8)] );
+				isito = vandq_s16( isito, ixOKOK199[REM(n59,199,8)] );
 			    if( continue_sito(isito) ){
-				isito = vandq_u64( isito, ixOKOK211[REM(n59,211,8)] );
-				isito = vandq_u64( isito, ixOKOK223[REM(n59,223,8)] );
-				isito = vandq_u64( isito, ixOKOK227[REM(n59,227,8)] );
-				isito = vandq_u64( isito, ixOKOK229[REM(n59,229,8)] );
-				isito = vandq_u64( isito, ixOKOK233[REM(n59,233,8)] );
-				isito = vandq_u64( isito, ixOKOK239[REM(n59,239,8)] );
-				isito = vandq_u64( isito, ixOKOK241[REM(n59,241,8)] );
-				isito = vandq_u64( isito, ixOKOK251[REM(n59,251,8)] );
-				isito = vandq_u64( isito, ixOKOK257[REM(n59,257,9)] );
-				isito = vandq_u64( isito, ixOKOK263[REM(n59,263,9)] );
-				isito = vandq_u64( isito, ixOKOK269[REM(n59,269,9)] );
-				isito = vandq_u64( isito, ixOKOK271[REM(n59,271,9)] );
-				isito = vandq_u64( isito, ixOKOK277[REM(n59,277,9)] );
+				isito = vandq_s16( isito, ixOKOK211[REM(n59,211,8)] );
+				isito = vandq_s16( isito, ixOKOK223[REM(n59,223,8)] );
+				isito = vandq_s16( isito, ixOKOK227[REM(n59,227,8)] );
+				isito = vandq_s16( isito, ixOKOK229[REM(n59,229,8)] );
+				isito = vandq_s16( isito, ixOKOK233[REM(n59,233,8)] );
+				isito = vandq_s16( isito, ixOKOK239[REM(n59,239,8)] );
+				isito = vandq_s16( isito, ixOKOK241[REM(n59,241,8)] );
+				isito = vandq_s16( isito, ixOKOK251[REM(n59,251,8)] );
+				isito = vandq_s16( isito, ixOKOK257[REM(n59,257,9)] );
+				isito = vandq_s16( isito, ixOKOK263[REM(n59,263,9)] );
+				isito = vandq_s16( isito, ixOKOK269[REM(n59,269,9)] );
+				isito = vandq_s16( isito, ixOKOK271[REM(n59,271,9)] );
+				isito = vandq_s16( isito, ixOKOK277[REM(n59,277,9)] );
 			    if( continue_sito(isito) ){
-				vst1q_u64( (uint64_t*)sito, isito );
+				vst1q_s16( (int16_t*)sito, isito );
 				for(int ii=0;ii<2;++ii){
 				    while(sito[ii]){
 					int setbit = 63 - __builtin_clzll(sito[ii]);
-					uint64_t n = n59+( setbit + data->SHIFT + (64*ii) )*MOD;
+					int16_t n = n59+( setbit + data->SHIFT + (64*ii) )*MOD;
 
 					if(n%7)
 					if(n%11)
@@ -331,7 +331,7 @@ void *thr_func_asimd(void *arg) {
 					if(OK523[n%523])
 					if(OK541[n%541]){
 					    int k = 0;
-					    uint64_t m = n + data->STEP * 5;
+					    int16_t m = n + data->STEP * 5;
 					    while(PrimeQ(m)){
 						k++;
 						m += data->STEP;
@@ -339,7 +339,7 @@ void *thr_func_asimd(void *arg) {
 					    
 					    if(k>=10){
 						m = n + data->STEP * 4;
-						uint64_t mstart = m;
+						int16_t mstart = m;
 						while(PrimeQ(m)){
 						    k++;
 						    m -= data->STEP;
@@ -348,40 +348,40 @@ void *thr_func_asimd(void *arg) {
 					    }
 
 					    if(k>=10){
-						uint64_t first_term = m + data->STEP;
+						int16_t first_term = m + data->STEP;
 
 						ReportSolution(k, data->K, first_term, checksum);
 						++apcount;
 					    }
 					}
 												
-					sito[ii] ^= ((uint64_t)1) << setbit; // toggle bit off
+					sito[ii] ^= ((int16_t)1) << setbit; // toggle bit off
 				    }
 				}
 			    }}}
 
 			    n59 += data->S59;
 
-			    r_numvec1 = vaddq_u64(r_numvec1, svec1);
-			    r_numvec2 = vaddq_u64(r_numvec2, svec2);
+			    r_numvec1 = vaddq_s16(r_numvec1, svec1);
+			    r_numvec2 = vaddq_s16(r_numvec2, svec2);
 
 			    if(n59>=MOD){
 				n59-=MOD;
 
-				r_numvec1 = vsubq_u64(r_numvec1, mvec1);
-				uint64x2_t addvec = vaddq_u64(r_numvec1, numvec1_1);
-				r_numvec1 = vbslq_u64(vcgtq_u64( ZERO128, r_numvec1), r_numvec1, addvec );
+				r_numvec1 = vsubq_s16(r_numvec1, mvec1);
+				int16x8_t addvec = vaddq_s16(r_numvec1, numvec1_1);
+				r_numvec1 = vbslq_s16(vcgtq_s16( ZERO128, r_numvec1), r_numvec1, addvec );
 				
 
-				r_numvec2 = vsubq_u64(r_numvec2, mvec2);
-				addvec = vaddq_u64(r_numvec2, numvec1_2);
-				r_numvec2 = vbslq_u64(vcgtq_u64( ZERO128, r_numvec2 ), r_numvec2, addvec );
+				r_numvec2 = vsubq_s16(r_numvec2, mvec2);
+				addvec = vaddq_s16(r_numvec2, numvec1_2);
+				r_numvec2 = vbslq_s16(vcgtq_s16( ZERO128, r_numvec2 ), r_numvec2, addvec );
 			    }
-			    uint64x2_t subvec = vsubq_u64(r_numvec1, numvec1_1);
-			    r_numvec1 = vbslq_u64(vcgtq_u64(r_numvec1, numvec2_1), r_numvec1, subvec );
+			    int16x8_t subvec = vsubq_s16(r_numvec1, numvec1_1);
+			    r_numvec1 = vbslq_s16(vcgtq_s16(r_numvec1, numvec2_1), r_numvec1, subvec );
 
-			    subvec = vsubq_u64(r_numvec2, numvec1_2);
-			    r_numvec2 = vbslq_u64(vcgtq_u64(r_numvec2, numvec2_2), r_numvec2, subvec );						
+			    subvec = vsubq_s16(r_numvec2, numvec1_2);
+			    r_numvec2 = vbslq_s16(vcgtq_s16(r_numvec2, numvec2_2), r_numvec2, subvec );						
 			   
 			}     
 			n53 += data->S53;
@@ -464,28 +464,28 @@ void Search_asimd(int K, int startSHIFT, int K_COUNT, int K_DONE, int threads)
 
     //quick loop vectors
     int16_t s1arr[8] __attribute__ ((aligned (16))) = { (int16_t)(S59%61), (int16_t)(S59%67), (int16_t)(S59%71), (int16_t)(S59%73), (int16_t)(S59%79), (int16_t)(S59%83), (int16_t)(S59%89), (int16_t)(S59%97) };
-    svec1 = vld1q_u64( (uint64_t*)s1arr);
+    svec1 = vld1q_s16( (int16_t*)s1arr);
 
     int16_t s2arr[8] __attribute__ ((aligned (16))) = { (int16_t)(S59%101), (int16_t)(S59%103), (int16_t)(S59%107), (int16_t)(S59%109), (int16_t)(S59%113), (int16_t)(S59%127), (int16_t)(S59%131), (int16_t)(S59%137) };
-    svec2 = vld1q_u64( (uint64_t*)s2arr);
+    svec2 = vld1q_s16( (int16_t*)s2arr);
 
     int16_t m1arr[8] __attribute__ ((aligned (16))) = { (int16_t)(MOD%61), (int16_t)(MOD%67), (int16_t)(MOD%71), (int16_t)(MOD%73), (int16_t)(MOD%79), (int16_t)(MOD%83), (int16_t)(MOD%89), (int16_t)(MOD%97) };
-    mvec1 = vld1q_u64( (uint64_t*)m1arr);
+    mvec1 = vld1q_s16( (int16_t*)m1arr);
 
     int16_t m2arr[8] __attribute__ ((aligned (16))) = { (int16_t)(MOD%101), (int16_t)(MOD%103), (int16_t)(MOD%107), (int16_t)(MOD%109), (int16_t)(MOD%113), (int16_t)(MOD%127), (int16_t)(MOD%131), (int16_t)(MOD%137) };
-    mvec2 = vld1q_u64( (uint64_t*)m2arr);
+    mvec2 = vld1q_s16( (int16_t*)m2arr);
 
     int16_t nv11arr[8] __attribute__ ((aligned (16))) = { 61, 67, 71, 73, 79, 83, 89, 97 };
-    numvec1_1 = vld1q_u64( (uint64_t*)nv11arr);
+    numvec1_1 = vld1q_s16( (int16_t*)nv11arr);
 
     int16_t nv21arr[8] __attribute__ ((aligned (16))) = { 60, 66, 70, 72, 78, 82, 88, 96 };
-    numvec2_1 = vld1q_u64( (uint64_t*)nv21arr);
+    numvec2_1 = vld1q_s16( (int16_t*)nv21arr);
     
     int16_t nv12arr[8] __attribute__ ((aligned (16))) = { 101, 103, 107, 109, 113, 127, 131, 137 };
-    numvec1_2 = vld1q_u64( (uint64_t*)nv12arr);
+    numvec1_2 = vld1q_s16( (int16_t*)nv12arr);
 
     int16_t nv22arr[8] __attribute__ ((aligned (16))) = { 100, 102, 106, 108, 112, 126, 130, 136 };
-    numvec2_2 = vld1q_u64( (uint64_t*)nv22arr);
+    numvec2_2 = vld1q_s16( (int16_t*)nv22arr);
 
     // init OK arrays    
     MAKE_OK(61);
