@@ -297,6 +297,7 @@ void *thr_func_asimd(void *arg) {
 				isito = vandq_u64( isito, ixOKOK271[REM(n59,271,9)] );
 				isito = vandq_u64( isito, ixOKOK277[REM(n59,277,9)] );
 			    if( continue_sito(isito) ){
+					printx(isito);
 				vst1q_u64( (uint64_t*)sito, isito );
 				for(int ii=0;ii<2;++ii){
 				    while(sito[ii]){
