@@ -237,8 +237,8 @@ void *thr_func_asimd(void *arg) {
 			rrems[7] = REM(n59,137,8);
 			uint64x2_t r_numvec1 = vld1q_u64( (uint64_t*)rems);
 			uint64x2_t r_numvec2 = vld1q_u64( (uint64_t*)rrems);
-			printx(r_numvec1);
-			printx(r_numvec2);
+			//printx(r_numvec1);
+			//printx(r_numvec2);
 
 			for(i59=(PRIME8-24);i59>0;i59--){
 			    
@@ -247,11 +247,11 @@ void *thr_func_asimd(void *arg) {
 				vst1q_u64( (uint64_t*)rrems, r_numvec2);
 			    }
 
-				printx(ixOKOK61[rems[0]]);
-				printx(ixOKOK67[rems[1]]);
+				//printx(ixOKOK61[rems[0]]);
+				//printx(ixOKOK67[rems[1]]);
 				uint64x2_t isito = vandq_u64( ixOKOK61[rems[0]], ixOKOK67[rems[1]] );
-				printx(isito);
-				exit(1);			
+				//printx(isito);
+				//exit(1);			
 
 			    
 			    isito = vandq_u64( isito, ixOKOK71[rems[2]] );
