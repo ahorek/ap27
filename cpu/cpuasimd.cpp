@@ -154,9 +154,9 @@ int16x8_t ixOKOK277[277];
     sOKOK[1]=0; \
     for(jj=0;jj<64;jj++){ \
       if(SHIFT < maxshift) \
-        sOKOK[0]|=(((int16_t)OK##_X[(j+(jj+SHIFT)*MOD)%_X])<<jj); \
+        sOKOK[0]|=(((uint64_t)OK##_X[(j+(jj+SHIFT)*MOD)%_X])<<jj); \
       if(SHIFT+64 < maxshift) \
-        sOKOK[1]|=(((int16_t)OK##_X[(j+(jj+SHIFT+64)*MOD)%_X])<<jj); \
+        sOKOK[1]|=(((uint64_t)OK##_X[(j+(jj+SHIFT+64)*MOD)%_X])<<jj); \
     } \
     ixOKOK##_X[j] = vld1q_s16( (int16_t*)sOKOK ); \
   }
@@ -281,7 +281,7 @@ void *thr_func_asimd(void *arg) {
 				for(int ii=0;ii<2;++ii){
 				    while(sito[ii]){
 					int setbit = 63 - __builtin_clzll(sito[ii]);
-					int16_t n = n59+( setbit + data->SHIFT + (64*ii) )*MOD;
+					uint64_t n = n59+( setbit + data->SHIFT + (64*ii) )*MOD;
 
 					if(n%7)
 					if(n%11)
@@ -331,7 +331,7 @@ void *thr_func_asimd(void *arg) {
 					if(OK523[n%523])
 					if(OK541[n%541]){
 					    int k = 0;
-					    int16_t m = n + data->STEP * 5;
+					    uint64_t m = n + data->STEP * 5;
 					    while(PrimeQ(m)){
 						k++;
 						m += data->STEP;
@@ -339,7 +339,7 @@ void *thr_func_asimd(void *arg) {
 					    
 					    if(k>=10){
 						m = n + data->STEP * 4;
-						int16_t mstart = m;
+						uint64_t mstart = m;
 						while(PrimeQ(m)){
 						    k++;
 						    m -= data->STEP;
@@ -348,14 +348,14 @@ void *thr_func_asimd(void *arg) {
 					    }
 
 					    if(k>=10){
-						int16_t first_term = m + data->STEP;
+						uint64_t first_term = m + data->STEP;
 
 						ReportSolution(k, data->K, first_term, checksum);
 						++apcount;
 					    }
 					}
 												
-					sito[ii] ^= ((int16_t)1) << setbit; // toggle bit off
+					sito[ii] ^= ((uint64_t)1) << setbit; // toggle bit off
 				    }
 				}
 			    }}}
