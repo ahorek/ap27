@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <pthread.h>
 #include <cstdlib>
+#include <iostream>
 
 #include "cpuconst.h"
 
@@ -247,6 +248,8 @@ void *thr_func_asimd(void *arg) {
 				vst1q_u32( (uint32_t*)rrems, r_numvec2);
 			    }
 
+                std::cout << rems[0] << std::endl;
+				std::cout << rems[1] << std::endl;;
 				printx(ixOKOK61[rems[0]]);
 				printx(ixOKOK67[rems[1]]);
 				uint32x4_t isito = vandq_u32( ixOKOK61[rems[0]], ixOKOK67[rems[1]] );
