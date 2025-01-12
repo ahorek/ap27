@@ -250,6 +250,7 @@ void *thr_func_asimd(void *arg) {
 				//printx(ixOKOK61[rems[0]]);
 				//printx(ixOKOK67[rems[1]]);
 				uint64x2_t isito = vandq_u64( ixOKOK61[rems[0]], ixOKOK67[rems[1]] );
+				printf("1");
 				printx(isito);
 				//exit(1);			
 
@@ -268,8 +269,10 @@ void *thr_func_asimd(void *arg) {
 			    isito = vandq_u64( isito, ixOKOK127[rrems[5]] );
 			    isito = vandq_u64( isito, ixOKOK131[rrems[6]] );
 			    isito = vandq_u64( isito, ixOKOK137[rrems[7]] );
+				printf("2");
 				printx(isito);
 			    if( continue_sito(isito) ){
+				printf("3");
 				printx(isito);
 				isito = vandq_u64( isito, ixOKOK139[REM(n59,139,8)] );
 				isito = vandq_u64( isito, ixOKOK149[REM(n59,149,8)] );
@@ -284,8 +287,10 @@ void *thr_func_asimd(void *arg) {
 				isito = vandq_u64( isito, ixOKOK193[REM(n59,193,8)] );
 				isito = vandq_u64( isito, ixOKOK197[REM(n59,197,8)] );
 				isito = vandq_u64( isito, ixOKOK199[REM(n59,199,8)] );
+				printf("4");
 				printx(isito);
 			    if( continue_sito(isito) ){
+				printf("5");
 				printx(isito);
 				isito = vandq_u64( isito, ixOKOK211[REM(n59,211,8)] );
 				isito = vandq_u64( isito, ixOKOK223[REM(n59,223,8)] );
@@ -300,8 +305,10 @@ void *thr_func_asimd(void *arg) {
 				isito = vandq_u64( isito, ixOKOK269[REM(n59,269,9)] );
 				isito = vandq_u64( isito, ixOKOK271[REM(n59,271,9)] );
 				isito = vandq_u64( isito, ixOKOK277[REM(n59,277,9)] );
+				printf("6");
 				printx(isito);
 			    if( continue_sito(isito) ){
+					printf("7");
 					printx(isito);
 					exit(1);
 				vst1q_u64( (uint64_t*)sito, isito );
