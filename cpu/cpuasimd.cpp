@@ -233,7 +233,7 @@ void *thr_func_asimd(void *arg) {
 				vst1q_s16( (int16_t*)rrems, r_numvec2);
 			    }								
 
-			    uint16x8_t isito = vandq_s16( ixOKOK61[rems[0]], ixOKOK67[rems[1]] );
+			    int16x8_t isito = vandq_s16( ixOKOK61[rems[0]], ixOKOK67[rems[1]] );
 			    isito = vandq_s16( isito, ixOKOK71[rems[2]] );
 			    isito = vandq_s16( isito, ixOKOK73[rems[3]] );
 			    isito = vandq_s16( isito, ixOKOK79[rems[4]] );
