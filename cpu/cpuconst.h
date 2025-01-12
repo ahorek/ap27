@@ -3,7 +3,7 @@
 extern uint64_t *n43_h;
 
 #if defined(__aarch64__)
-  int32x4_t svec1, svec2, mvec1, mvec2, numvec1_1, numvec2_1, numvec1_2, numvec2_2;
+  int64x2_t svec1, svec2, mvec1, mvec2, numvec1_1, numvec2_1, numvec1_2, numvec2_2;
 #else
   extern __m128i svec1, svec2, mvec1, mvec2, numvec1_1, numvec2_1, numvec1_2, numvec2_2;
   extern __m256i svec, mvec, numvec1, numvec2;

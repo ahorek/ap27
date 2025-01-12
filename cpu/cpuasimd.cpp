@@ -7,7 +7,6 @@
 #include <cstdio>
 #include <pthread.h>
 #include <cstdlib>
-#include <iostream>
 
 #include "cpuconst.h"
 
@@ -95,52 +94,64 @@ char OK521[521];
 char OK523[523];
 char OK541[541];
 
-uint32x4_t ixOKOK61[61];
-uint32x4_t ixOKOK67[67];
-uint32x4_t ixOKOK71[71];
-uint32x4_t ixOKOK73[73];
-uint32x4_t ixOKOK79[79];
-uint32x4_t ixOKOK83[83];
-uint32x4_t ixOKOK89[89];
-uint32x4_t ixOKOK97[97];
-uint32x4_t ixOKOK101[101];
-uint32x4_t ixOKOK103[103];
-uint32x4_t ixOKOK107[107];
-uint32x4_t ixOKOK109[109];
-uint32x4_t ixOKOK113[113];
-uint32x4_t ixOKOK127[127];
-uint32x4_t ixOKOK131[131];
-uint32x4_t ixOKOK137[137];
-uint32x4_t ixOKOK139[139];
-uint32x4_t ixOKOK149[149];
-uint32x4_t ixOKOK151[151];
-uint32x4_t ixOKOK157[157];
-uint32x4_t ixOKOK163[163];
-uint32x4_t ixOKOK167[167];
-uint32x4_t ixOKOK173[173];
-uint32x4_t ixOKOK179[179];
-uint32x4_t ixOKOK181[181];
-uint32x4_t ixOKOK191[191];
-uint32x4_t ixOKOK193[193];
-uint32x4_t ixOKOK197[197];
-uint32x4_t ixOKOK199[199];
-uint32x4_t ixOKOK211[211];
-uint32x4_t ixOKOK223[223];
-uint32x4_t ixOKOK227[227];
-uint32x4_t ixOKOK229[229];
-uint32x4_t ixOKOK233[233];
-uint32x4_t ixOKOK239[239];
-uint32x4_t ixOKOK241[241];
-uint32x4_t ixOKOK251[251];
-uint32x4_t ixOKOK257[257];
-uint32x4_t ixOKOK263[263];
-uint32x4_t ixOKOK269[269];
-uint32x4_t ixOKOK271[271];
-uint32x4_t ixOKOK277[277];
+uint64x2_t ixOKOK61[61];
+uint64x2_t ixOKOK67[67];
+uint64x2_t ixOKOK71[71];
+uint64x2_t ixOKOK73[73];
+uint64x2_t ixOKOK79[79];
+uint64x2_t ixOKOK83[83];
+uint64x2_t ixOKOK89[89];
+uint64x2_t ixOKOK97[97];
+uint64x2_t ixOKOK101[101];
+uint64x2_t ixOKOK103[103];
+uint64x2_t ixOKOK107[107];
+uint64x2_t ixOKOK109[109];
+uint64x2_t ixOKOK113[113];
+uint64x2_t ixOKOK127[127];
+uint64x2_t ixOKOK131[131];
+uint64x2_t ixOKOK137[137];
+uint64x2_t ixOKOK139[139];
+uint64x2_t ixOKOK149[149];
+uint64x2_t ixOKOK151[151];
+uint64x2_t ixOKOK157[157];
+uint64x2_t ixOKOK163[163];
+uint64x2_t ixOKOK167[167];
+uint64x2_t ixOKOK173[173];
+uint64x2_t ixOKOK179[179];
+uint64x2_t ixOKOK181[181];
+uint64x2_t ixOKOK191[191];
+uint64x2_t ixOKOK193[193];
+uint64x2_t ixOKOK197[197];
+uint64x2_t ixOKOK199[199];
+uint64x2_t ixOKOK211[211];
+uint64x2_t ixOKOK223[223];
+uint64x2_t ixOKOK227[227];
+uint64x2_t ixOKOK229[229];
+uint64x2_t ixOKOK233[233];
+uint64x2_t ixOKOK239[239];
+uint64x2_t ixOKOK241[241];
+uint64x2_t ixOKOK251[251];
+uint64x2_t ixOKOK257[257];
+uint64x2_t ixOKOK263[263];
+uint64x2_t ixOKOK269[269];
+uint64x2_t ixOKOK271[271];
+uint64x2_t ixOKOK277[277];
+
+void printx(uint64x2_t vec) {
+    uint64_t elements[2];
+    vst1q_u64(elements, vec); // Store vector elements into an array
+
+    printf("uint64x2_t: [");
+    for (int i = 0; i < 2; ++i) {
+        printf("%d", elements[i]);
+        if (i < 7) printf(", ");
+    }
+    printf("]\n");
+}
 
 
 // true if any element is not zero
-#define continue_sito(_X) (vmaxvq_u32(_X) != 0)
+#define continue_sito(_X) (vgetq_lane_u64(_X, 0) || vgetq_lane_u64(_X, 1))
 
 #define MAKE_OK(_X) \
   for(j=0;j<_X;j++) \
@@ -159,20 +170,8 @@ uint32x4_t ixOKOK277[277];
       if(SHIFT+64 < maxshift) \
         sOKOK[1]|=(((uint64_t)OK##_X[(j+(jj+SHIFT+64)*MOD)%_X])<<jj); \
     } \
-    ixOKOK##_X[j] = vld1q_u32( (uint32_t*)sOKOK ); \
+    ixOKOK##_X[j] = vld1q_u64( (uint64_t*)sOKOK ); \
   }
-
-void printx(uint32x4_t vec) {
-    uint32_t elements[8];
-    vst1q_u32(elements, vec); // Store vector elements into an array
-
-    printf("uint32x4_t: [");
-    for (int i = 0; i < 4; ++i) {
-        printf("%d", elements[i]);
-        if (i < 7) printf(", ");
-    }
-    printf("]\n");
-}
 
 
 void *thr_func_asimd(void *arg) {
@@ -184,7 +183,7 @@ void *thr_func_asimd(void *arg) {
     uint64_t sito[2] __attribute__ ((aligned (16)));
     int16_t rems[8] __attribute__ ((aligned (16)));
     int16_t rrems[8] __attribute__ ((aligned (16)));
-    const uint32x4_t ZERO128 = vdupq_n_u32(0);
+    const uint64x2_t ZERO128 = vdupq_n_u64(0);
     uint32_t checksum = 0;
     uint32_t apcount = 0;
 
@@ -236,71 +235,69 @@ void *thr_func_asimd(void *arg) {
 			rrems[5] = REM(n59,127,7);
 			rrems[6] = REM(n59,131,8);
 			rrems[7] = REM(n59,137,8);
-			uint32x4_t r_numvec1 = vld1q_u32( (uint32_t*)rems);
-			uint32x4_t r_numvec2 = vld1q_u32( (uint32_t*)rrems);
+			uint64x2_t r_numvec1 = vld1q_u64( (uint64_t*)rems);
+			uint64x2_t r_numvec2 = vld1q_u64( (uint64_t*)rrems);
 			printx(r_numvec1);
 			printx(r_numvec2);
 
 			for(i59=(PRIME8-24);i59>0;i59--){
 			    
 			    if(i59 < 35){
-				vst1q_u32( (uint32_t*)rems, r_numvec1);
-				vst1q_u32( (uint32_t*)rrems, r_numvec2);
+				vst1q_u64( (uint64_t*)rems, r_numvec1);
+				vst1q_u64( (uint64_t*)rrems, r_numvec2);
 			    }
 
-                std::cout << rems[0] << std::endl;
-				std::cout << rems[1] << std::endl;;
 				printx(ixOKOK61[rems[0]]);
 				printx(ixOKOK67[rems[1]]);
-				uint32x4_t isito = vandq_u32( ixOKOK61[rems[0]], ixOKOK67[rems[1]] );
+				uint64x2_t isito = vandq_u64( ixOKOK61[rems[0]], ixOKOK67[rems[1]] );
 				printx(isito);
-				exit(1);
+				exit(1);			
 
 			    
-			    isito = vandq_u32( isito, ixOKOK71[rems[2]] );
-			    isito = vandq_u32( isito, ixOKOK73[rems[3]] );
-			    isito = vandq_u32( isito, ixOKOK79[rems[4]] );
-			    isito = vandq_u32( isito, ixOKOK83[rems[5]] );
-			    isito = vandq_u32( isito, ixOKOK89[rems[6]] );
-			    isito = vandq_u32( isito, ixOKOK97[rems[7]] );
-			    isito = vandq_u32( isito, ixOKOK101[rrems[0]] );
-			    isito = vandq_u32( isito, ixOKOK103[rrems[1]] );
-			    isito = vandq_u32( isito, ixOKOK107[rrems[2]] );
-			    isito = vandq_u32( isito, ixOKOK109[rrems[3]] );
-			    isito = vandq_u32( isito, ixOKOK113[rrems[4]] );
-			    isito = vandq_u32( isito, ixOKOK127[rrems[5]] );
-			    isito = vandq_u32( isito, ixOKOK131[rrems[6]] );
-			    isito = vandq_u32( isito, ixOKOK137[rrems[7]] );
+			    isito = vandq_u64( isito, ixOKOK71[rems[2]] );
+			    isito = vandq_u64( isito, ixOKOK73[rems[3]] );
+			    isito = vandq_u64( isito, ixOKOK79[rems[4]] );
+			    isito = vandq_u64( isito, ixOKOK83[rems[5]] );
+			    isito = vandq_u64( isito, ixOKOK89[rems[6]] );
+			    isito = vandq_u64( isito, ixOKOK97[rems[7]] );
+			    isito = vandq_u64( isito, ixOKOK101[rrems[0]] );
+			    isito = vandq_u64( isito, ixOKOK103[rrems[1]] );
+			    isito = vandq_u64( isito, ixOKOK107[rrems[2]] );
+			    isito = vandq_u64( isito, ixOKOK109[rrems[3]] );
+			    isito = vandq_u64( isito, ixOKOK113[rrems[4]] );
+			    isito = vandq_u64( isito, ixOKOK127[rrems[5]] );
+			    isito = vandq_u64( isito, ixOKOK131[rrems[6]] );
+			    isito = vandq_u64( isito, ixOKOK137[rrems[7]] );
 			    if( continue_sito(isito) ){
-				isito = vandq_u32( isito, ixOKOK139[REM(n59,139,8)] );
-				isito = vandq_u32( isito, ixOKOK149[REM(n59,149,8)] );
-				isito = vandq_u32( isito, ixOKOK151[REM(n59,151,8)] );
-				isito = vandq_u32( isito, ixOKOK157[REM(n59,157,8)] );
-				isito = vandq_u32( isito, ixOKOK163[REM(n59,163,8)] );
-				isito = vandq_u32( isito, ixOKOK167[REM(n59,167,8)] );
-				isito = vandq_u32( isito, ixOKOK173[REM(n59,173,8)] );
-				isito = vandq_u32( isito, ixOKOK179[REM(n59,179,8)] );
-				isito = vandq_u32( isito, ixOKOK181[REM(n59,181,8)] );
-				isito = vandq_u32( isito, ixOKOK191[REM(n59,191,8)] );
-				isito = vandq_u32( isito, ixOKOK193[REM(n59,193,8)] );
-				isito = vandq_u32( isito, ixOKOK197[REM(n59,197,8)] );
-				isito = vandq_u32( isito, ixOKOK199[REM(n59,199,8)] );
+				isito = vandq_u64( isito, ixOKOK139[REM(n59,139,8)] );
+				isito = vandq_u64( isito, ixOKOK149[REM(n59,149,8)] );
+				isito = vandq_u64( isito, ixOKOK151[REM(n59,151,8)] );
+				isito = vandq_u64( isito, ixOKOK157[REM(n59,157,8)] );
+				isito = vandq_u64( isito, ixOKOK163[REM(n59,163,8)] );
+				isito = vandq_u64( isito, ixOKOK167[REM(n59,167,8)] );
+				isito = vandq_u64( isito, ixOKOK173[REM(n59,173,8)] );
+				isito = vandq_u64( isito, ixOKOK179[REM(n59,179,8)] );
+				isito = vandq_u64( isito, ixOKOK181[REM(n59,181,8)] );
+				isito = vandq_u64( isito, ixOKOK191[REM(n59,191,8)] );
+				isito = vandq_u64( isito, ixOKOK193[REM(n59,193,8)] );
+				isito = vandq_u64( isito, ixOKOK197[REM(n59,197,8)] );
+				isito = vandq_u64( isito, ixOKOK199[REM(n59,199,8)] );
 			    if( continue_sito(isito) ){
-				isito = vandq_u32( isito, ixOKOK211[REM(n59,211,8)] );
-				isito = vandq_u32( isito, ixOKOK223[REM(n59,223,8)] );
-				isito = vandq_u32( isito, ixOKOK227[REM(n59,227,8)] );
-				isito = vandq_u32( isito, ixOKOK229[REM(n59,229,8)] );
-				isito = vandq_u32( isito, ixOKOK233[REM(n59,233,8)] );
-				isito = vandq_u32( isito, ixOKOK239[REM(n59,239,8)] );
-				isito = vandq_u32( isito, ixOKOK241[REM(n59,241,8)] );
-				isito = vandq_u32( isito, ixOKOK251[REM(n59,251,8)] );
-				isito = vandq_u32( isito, ixOKOK257[REM(n59,257,9)] );
-				isito = vandq_u32( isito, ixOKOK263[REM(n59,263,9)] );
-				isito = vandq_u32( isito, ixOKOK269[REM(n59,269,9)] );
-				isito = vandq_u32( isito, ixOKOK271[REM(n59,271,9)] );
-				isito = vandq_u32( isito, ixOKOK277[REM(n59,277,9)] );
+				isito = vandq_u64( isito, ixOKOK211[REM(n59,211,8)] );
+				isito = vandq_u64( isito, ixOKOK223[REM(n59,223,8)] );
+				isito = vandq_u64( isito, ixOKOK227[REM(n59,227,8)] );
+				isito = vandq_u64( isito, ixOKOK229[REM(n59,229,8)] );
+				isito = vandq_u64( isito, ixOKOK233[REM(n59,233,8)] );
+				isito = vandq_u64( isito, ixOKOK239[REM(n59,239,8)] );
+				isito = vandq_u64( isito, ixOKOK241[REM(n59,241,8)] );
+				isito = vandq_u64( isito, ixOKOK251[REM(n59,251,8)] );
+				isito = vandq_u64( isito, ixOKOK257[REM(n59,257,9)] );
+				isito = vandq_u64( isito, ixOKOK263[REM(n59,263,9)] );
+				isito = vandq_u64( isito, ixOKOK269[REM(n59,269,9)] );
+				isito = vandq_u64( isito, ixOKOK271[REM(n59,271,9)] );
+				isito = vandq_u64( isito, ixOKOK277[REM(n59,277,9)] );
 			    if( continue_sito(isito) ){
-				vst1q_u32( (uint32_t*)sito, isito );
+				vst1q_u64( (uint64_t*)sito, isito );
 				for(int ii=0;ii<2;++ii){
 				    while(sito[ii]){
 					int setbit = 63 - __builtin_clzll(sito[ii]);
@@ -385,26 +382,26 @@ void *thr_func_asimd(void *arg) {
 
 			    n59 += data->S59;
 
-			    r_numvec1 = vaddq_u32(r_numvec1, svec1);
-			    r_numvec2 = vaddq_u32(r_numvec2, svec2);
+			    r_numvec1 = vaddq_u64(r_numvec1, svec1);
+			    r_numvec2 = vaddq_u64(r_numvec2, svec2);
 
 			    if(n59>=MOD){
 				n59-=MOD;
 
-				r_numvec1 = vsubq_u32(r_numvec1, mvec1);
-				uint32x4_t addvec = vaddq_u32(r_numvec1, numvec1_1);
-				r_numvec1 = vbslq_u32(vcgtq_u32( ZERO128, r_numvec1), r_numvec1, addvec );
+				r_numvec1 = vsubq_u64(r_numvec1, mvec1);
+				uint64x2_t addvec = vaddq_u64(r_numvec1, numvec1_1);
+				r_numvec1 = vbslq_u64(vcgtq_u64( ZERO128, r_numvec1), r_numvec1, addvec );
 				
 
-				r_numvec2 = vsubq_u32(r_numvec2, mvec2);
-				addvec = vaddq_u32(r_numvec2, numvec1_2);
-				r_numvec2 = vbslq_u32(vcgtq_u32( ZERO128, r_numvec2 ), r_numvec2, addvec );
+				r_numvec2 = vsubq_u64(r_numvec2, mvec2);
+				addvec = vaddq_u64(r_numvec2, numvec1_2);
+				r_numvec2 = vbslq_u64(vcgtq_u64( ZERO128, r_numvec2 ), r_numvec2, addvec );
 			    }
-			    uint32x4_t subvec = vsubq_u32(r_numvec1, numvec1_1);
-			    r_numvec1 = vbslq_u32(vcgtq_u32(r_numvec1, numvec2_1), r_numvec1, subvec );
+			    uint64x2_t subvec = vsubq_u64(r_numvec1, numvec1_1);
+			    r_numvec1 = vbslq_u64(vcgtq_u64(r_numvec1, numvec2_1), r_numvec1, subvec );
 
-			    subvec = vsubq_u32(r_numvec2, numvec1_2);
-			    r_numvec2 = vbslq_u32(vcgtq_u32(r_numvec2, numvec2_2), r_numvec2, subvec );						
+			    subvec = vsubq_u64(r_numvec2, numvec1_2);
+			    r_numvec2 = vbslq_u64(vcgtq_u64(r_numvec2, numvec2_2), r_numvec2, subvec );						
 			   
 			}     
 			n53 += data->S53;
@@ -487,28 +484,28 @@ void Search_asimd(int K, int startSHIFT, int K_COUNT, int K_DONE, int threads)
 
     //quick loop vectors
     int16_t s1arr[8] __attribute__ ((aligned (16))) = { (int16_t)(S59%61), (int16_t)(S59%67), (int16_t)(S59%71), (int16_t)(S59%73), (int16_t)(S59%79), (int16_t)(S59%83), (int16_t)(S59%89), (int16_t)(S59%97) };
-    svec1 = vld1q_u32( (uint32_t*)s1arr);
+    svec1 = vld1q_u64( (uint64_t*)s1arr);
 
     int16_t s2arr[8] __attribute__ ((aligned (16))) = { (int16_t)(S59%101), (int16_t)(S59%103), (int16_t)(S59%107), (int16_t)(S59%109), (int16_t)(S59%113), (int16_t)(S59%127), (int16_t)(S59%131), (int16_t)(S59%137) };
-    svec2 = vld1q_u32( (uint32_t*)s2arr);
+    svec2 = vld1q_u64( (uint64_t*)s2arr);
 
     int16_t m1arr[8] __attribute__ ((aligned (16))) = { (int16_t)(MOD%61), (int16_t)(MOD%67), (int16_t)(MOD%71), (int16_t)(MOD%73), (int16_t)(MOD%79), (int16_t)(MOD%83), (int16_t)(MOD%89), (int16_t)(MOD%97) };
-    mvec1 = vld1q_u32( (uint32_t*)m1arr);
+    mvec1 = vld1q_u64( (uint64_t*)m1arr);
 
     int16_t m2arr[8] __attribute__ ((aligned (16))) = { (int16_t)(MOD%101), (int16_t)(MOD%103), (int16_t)(MOD%107), (int16_t)(MOD%109), (int16_t)(MOD%113), (int16_t)(MOD%127), (int16_t)(MOD%131), (int16_t)(MOD%137) };
-    mvec2 = vld1q_u32( (uint32_t*)m2arr);
+    mvec2 = vld1q_u64( (uint64_t*)m2arr);
 
     int16_t nv11arr[8] __attribute__ ((aligned (16))) = { 61, 67, 71, 73, 79, 83, 89, 97 };
-    numvec1_1 = vld1q_u32( (uint32_t*)nv11arr);
+    numvec1_1 = vld1q_u64( (uint64_t*)nv11arr);
 
     int16_t nv21arr[8] __attribute__ ((aligned (16))) = { 60, 66, 70, 72, 78, 82, 88, 96 };
-    numvec2_1 = vld1q_u32( (uint32_t*)nv21arr);
+    numvec2_1 = vld1q_u64( (uint64_t*)nv21arr);
     
     int16_t nv12arr[8] __attribute__ ((aligned (16))) = { 101, 103, 107, 109, 113, 127, 131, 137 };
-    numvec1_2 = vld1q_u32( (uint32_t*)nv12arr);
+    numvec1_2 = vld1q_u64( (uint64_t*)nv12arr);
 
     int16_t nv22arr[8] __attribute__ ((aligned (16))) = { 100, 102, 106, 108, 112, 126, 130, 136 };
-    numvec2_2 = vld1q_u32( (uint32_t*)nv22arr);
+    numvec2_2 = vld1q_u64( (uint64_t*)nv22arr);
 
     // init OK arrays    
     MAKE_OK(61);
