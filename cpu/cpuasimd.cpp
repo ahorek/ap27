@@ -143,7 +143,7 @@ void printx(uint64x2_t vec) {
 
     printf("uint64x2_t: [");
     for (int i = 0; i < 2; ++i) {
-        printf("%d", elements[i]);
+        printf("%u", elements[i]);
         if (i < 7) printf(", ");
     }
     printf("]\n");
