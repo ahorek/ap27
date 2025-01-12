@@ -139,7 +139,7 @@ uint32x4_t ixOKOK277[277];
 
 
 // true if any element is not zero
-#define continue_sito(_X) (vmaxvq_u32(vabsq_u32(_X)) != 0)
+#define continue_sito(_X) (vmaxvq_u32(_X) != 0)
 
 #define MAKE_OK(_X) \
   for(j=0;j<_X;j++) \
