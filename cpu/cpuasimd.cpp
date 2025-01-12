@@ -229,8 +229,8 @@ void *thr_func_asimd(void *arg) {
 			for(i59=(PRIME8-24);i59>0;i59--){
 			    
 			    if(i59 < 35){
-				vst1q_s16( (int16x8_t*)rems, r_numvec1);
-				vst1q_s16( (int16x8_t*)rrems, r_numvec2);
+				vst1q_s16( (int16_t*)rems, r_numvec1);
+				vst1q_s16( (int16_t*)rrems, r_numvec2);
 			    }								
 
 			    uint16x8_t isito = vandq_s16( ixOKOK61[rems[0]], ixOKOK67[rems[1]] );
