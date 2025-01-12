@@ -19,14 +19,14 @@ LDFLAGS = $(CFLAGS) -static
 all : $(APP)
 
 $(APP) : $(OBJ)
-        $(LD) $(LDFLAGS) $^ $(BOINC_LIB) -o $@
+	$(LD) $(LDFLAGS) $^ $(BOINC_LIB) -o $@
 
 AP26.o : $(SRC)
-        $(CC) $(DFLAGS) $(CFLAGS) $(BOINC_INC) -c -o $@ AP26.cpp
+	$(CC) $(DFLAGS) $(CFLAGS) $(BOINC_INC) -c -o $@ AP26.cpp
 
 cpuasimd.o : cpuasimd.cpp
-        $(CC) $(DFLAGS) $(CFLAGS) -c -o $@ $^
+	$(CC) $(DFLAGS) $(CFLAGS) -c -o $@ $^
 
 clean :
-        rm -f *.o $(APP)
+	rm -f *.o $(APP)
 
