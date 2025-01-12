@@ -158,7 +158,7 @@ uint32x4_t ixOKOK277[277];
       if(SHIFT+64 < maxshift) \
         sOKOK[1]|=(((uint64_t)OK##_X[(j+(jj+SHIFT+64)*MOD)%_X])<<jj); \
     } \
-    ixOKOK##_X[j] = vld1q_u32( (int16_t*)sOKOK ); \
+    ixOKOK##_X[j] = vld1q_u32( (uint32_t*)sOKOK ); \
   }
 
 void printx(uint32x4_t vec) {
