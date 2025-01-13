@@ -241,6 +241,9 @@ void *thr_func_asimd(void *arg) {
 			printf("numvec\n");
 			printx(r_numvec1);
 			printx(r_numvec2);
+			printf("rems load\n");
+				for (int a; a < 7; a++)
+				std::cout << rems[a] << std::endl;
 
 			for(i59=(PRIME8-24);i59>0;i59--){
 			    
