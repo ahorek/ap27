@@ -246,6 +246,9 @@ void *thr_func_asimd(void *arg) {
 			    if(i59 < 35){
 				vst1q_u64( (uint64_t*)rems, r_numvec1);
 				vst1q_u64( (uint64_t*)rrems, r_numvec2);
+				printf("numvec2\n");
+				printx(r_numvec1);
+				printx(r_numvec2);
 				printf("store\n");
 			    }
 
