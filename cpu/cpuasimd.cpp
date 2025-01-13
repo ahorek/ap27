@@ -244,8 +244,8 @@ void *thr_func_asimd(void *arg) {
 			for(i59=(PRIME8-24);i59>0;i59--){
 			    
 			    if(i59 < 35){
-				vst1q_u64( rems, r_numvec1);
-				vst1q_u64( rrems, r_numvec2);
+				vst1q_u64( (uint64_t*)rems, r_numvec1);
+				vst1q_u64( (uint64_t*)rrems, r_numvec2);
 				printf("store\n");
 			    }
 
