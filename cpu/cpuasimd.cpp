@@ -398,6 +398,9 @@ void *thr_func_asimd(void *arg) {
 
 			    r_numvec1 = vaddq_u64(r_numvec1, svec1);
 			    r_numvec2 = vaddq_u64(r_numvec2, svec2);
+				printf("nene\n");
+				printx(r_numvec1);
+				printx(r_numvec2);
 
 			    if(n59>=MOD){
 				n59-=MOD;
@@ -405,6 +408,8 @@ void *thr_func_asimd(void *arg) {
 				r_numvec1 = vsubq_u64(r_numvec1, mvec1);
 				uint64x2_t addvec = vaddq_u64(r_numvec1, numvec1_1);
 				r_numvec1 = vbslq_u64(vcgtq_u64( ZERO128, r_numvec1), r_numvec1, addvec );
+				printf("oosss\n");
+				printx(r_numvec1);
 				
 
 				r_numvec2 = vsubq_u64(r_numvec2, mvec2);
