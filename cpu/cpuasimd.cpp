@@ -386,21 +386,23 @@ void *thr_func_asimd(void *arg) {
 				n59-=MOD;
 
 				r_numvec1 = vsubq_u64(r_numvec1, mvec1);
-				uint64x2_t addvec = vaddq_u64(r_numvec1, numvec1_1);
+				uint64x2_t addvec = vaddq_s16(r_numvec1, numvec1_1);
 				r_numvec1 = vbslq_u64(vcgtq_u64( ZERO128, r_numvec1), r_numvec1, addvec );
 
 				r_numvec2 = vsubq_u64(r_numvec2, mvec2);
 				addvec = vaddq_u64(r_numvec2, numvec1_2);
 				r_numvec2 = vbslq_u64(vcgtq_u64( ZERO128, r_numvec2 ), r_numvec2, addvec );
 			    }
-			    uint64x2_t subvec = vsubq_u64(r_numvec1, numvec1_1);
+			    uint64x2_t subvec = vsubq_s16(r_numvec1, numvec1_1);
 				printx(r_numvec1);
 				printx(numvec1_1);
 				printf("subvec\n");
 				printx(subvec);
 			    r_numvec1 = vbslq_u64(vcgtq_u64(r_numvec1, numvec2_1), r_numvec1, subvec );
+				printf("new\n");
+				printx(r_numvec1);
 
-			    subvec = vsubq_u64(r_numvec2, numvec1_2);
+			    subvec = vsubq_s16(r_numvec2, numvec1_2);
 			    r_numvec2 = vbslq_u64(vcgtq_u64(r_numvec2, numvec2_2), r_numvec2, subvec );						
 			   
 			}     
