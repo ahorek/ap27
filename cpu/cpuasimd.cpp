@@ -238,37 +238,16 @@ void *thr_func_asimd(void *arg) {
 			rrems[7] = REM(n59,137,8);
 			uint64x2_t r_numvec1 = vld1q_u64( (uint64_t*)rems);
 			uint64x2_t r_numvec2 = vld1q_u64( (uint64_t*)rrems);
-			printf("numvec\n");
-			printx(r_numvec1);
-			printx(r_numvec2);
-			printf("rems load\n");
-				for (int a = 0; a < 7; a++)
-				std::cout << rems[a] << std::endl;
 
 			for(i59=(PRIME8-24);i59>0;i59--){
 			    
 			    if(i59 < 35){
-					printf("remsbefore\n");
-				for (int a = 0; a < 7; a++)
-				std::cout << rems[a] << std::endl;
 				vst1q_u64( (uint64_t*)rems, r_numvec1);
 				vst1q_u64( (uint64_t*)rrems, r_numvec2);
-					printf("remsafter\n");
-				for (int a = 0; a < 7; a++)
-				std::cout << rems[a] << std::endl;
-				printf("numvec2\n");
-				printx(r_numvec1);
-				printx(r_numvec2);
-				printf("store\n");
 			    }
 
-                printf("rems\n");
-				printx(ixOKOK61[rems[0]]);
-				printx(ixOKOK67[rems[1]]);
 				uint64x2_t isito = vandq_u64( ixOKOK61[rems[0]], ixOKOK67[rems[1]] );
-				printf("1");
-				printx(isito);
-				//exit(1);			
+	
 
 			    
 			    isito = vandq_u64( isito, ixOKOK71[rems[2]] );
@@ -285,11 +264,7 @@ void *thr_func_asimd(void *arg) {
 			    isito = vandq_u64( isito, ixOKOK127[rrems[5]] );
 			    isito = vandq_u64( isito, ixOKOK131[rrems[6]] );
 			    isito = vandq_u64( isito, ixOKOK137[rrems[7]] );
-				printf("2");
-				printx(isito);
 			    if( continue_sito(isito) ){
-				printf("3");
-				printx(isito);
 				isito = vandq_u64( isito, ixOKOK139[REM(n59,139,8)] );
 				isito = vandq_u64( isito, ixOKOK149[REM(n59,149,8)] );
 				isito = vandq_u64( isito, ixOKOK151[REM(n59,151,8)] );
@@ -303,11 +278,7 @@ void *thr_func_asimd(void *arg) {
 				isito = vandq_u64( isito, ixOKOK193[REM(n59,193,8)] );
 				isito = vandq_u64( isito, ixOKOK197[REM(n59,197,8)] );
 				isito = vandq_u64( isito, ixOKOK199[REM(n59,199,8)] );
-				printf("4");
-				printx(isito);
 			    if( continue_sito(isito) ){
-				printf("5");
-				printx(isito);
 				isito = vandq_u64( isito, ixOKOK211[REM(n59,211,8)] );
 				isito = vandq_u64( isito, ixOKOK223[REM(n59,223,8)] );
 				isito = vandq_u64( isito, ixOKOK227[REM(n59,227,8)] );
@@ -321,11 +292,7 @@ void *thr_func_asimd(void *arg) {
 				isito = vandq_u64( isito, ixOKOK269[REM(n59,269,9)] );
 				isito = vandq_u64( isito, ixOKOK271[REM(n59,271,9)] );
 				isito = vandq_u64( isito, ixOKOK277[REM(n59,277,9)] );
-				printf("6");
-				printx(isito);
 			    if( continue_sito(isito) ){
-					printf("7");
-					printx(isito);
 					exit(1);
 				vst1q_u64( (uint64_t*)sito, isito );
 				for(int ii=0;ii<2;++ii){
@@ -414,9 +381,6 @@ void *thr_func_asimd(void *arg) {
 
 			    r_numvec1 = vaddq_u64(r_numvec1, svec1);
 			    r_numvec2 = vaddq_u64(r_numvec2, svec2);
-				printf("nene\n");
-				printx(r_numvec1);
-				printx(r_numvec2);
 
 			    if(n59>=MOD){
 				n59-=MOD;
@@ -424,20 +388,17 @@ void *thr_func_asimd(void *arg) {
 				r_numvec1 = vsubq_u64(r_numvec1, mvec1);
 				uint64x2_t addvec = vaddq_u64(r_numvec1, numvec1_1);
 				r_numvec1 = vbslq_u64(vcgtq_u64( ZERO128, r_numvec1), r_numvec1, addvec );
-				printf("oosss\n");
-				printx(r_numvec1);
 
 				r_numvec2 = vsubq_u64(r_numvec2, mvec2);
 				addvec = vaddq_u64(r_numvec2, numvec1_2);
 				r_numvec2 = vbslq_u64(vcgtq_u64( ZERO128, r_numvec2 ), r_numvec2, addvec );
 			    }
 			    uint64x2_t subvec = vsubq_u64(r_numvec1, numvec1_1);
+				printx(r_numvec1);
 				printx(numvec1_1);
 				printf("subvec\n");
 				printx(subvec);
 			    r_numvec1 = vbslq_u64(vcgtq_u64(r_numvec1, numvec2_1), r_numvec1, subvec );
-				printf("blend\n");
-				printx(r_numvec1);
 
 			    subvec = vsubq_u64(r_numvec2, numvec1_2);
 			    r_numvec2 = vbslq_u64(vcgtq_u64(r_numvec2, numvec2_2), r_numvec2, subvec );						
