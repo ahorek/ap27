@@ -237,18 +237,19 @@ void *thr_func_asimd(void *arg) {
 			rrems[7] = REM(n59,137,8);
 			uint64x2_t r_numvec1 = vld1q_u64( (uint64_t*)rems);
 			uint64x2_t r_numvec2 = vld1q_u64( (uint64_t*)rrems);
-			//printx(r_numvec1);
-			//printx(r_numvec2);
+			printf("numvec\n");
+			printx(r_numvec1);
+			printx(r_numvec2);
 
 			for(i59=(PRIME8-24);i59>0;i59--){
 			    
 			    if(i59 < 35){
-				vst1q_u64( (uint64_t*)rems, r_numvec1);
-				vst1q_u64( (uint64_t*)rrems, r_numvec2);
-				printf("store");
+				vst1q_u64( rems, r_numvec1);
+				vst1q_u64( rrems, r_numvec2);
+				printf("store\n");
 			    }
 
-                printf("rems");
+                printf("rems\n");
 				printx(ixOKOK61[rems[0]]);
 				printx(ixOKOK67[rems[1]]);
 				uint64x2_t isito = vandq_u64( ixOKOK61[rems[0]], ixOKOK67[rems[1]] );
