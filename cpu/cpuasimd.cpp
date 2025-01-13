@@ -433,7 +433,11 @@ void *thr_func_asimd(void *arg) {
 				r_numvec2 = vbslq_u64(vcgtq_u64( ZERO128, r_numvec2 ), r_numvec2, addvec );
 			    }
 			    uint64x2_t subvec = vsubq_u64(r_numvec1, numvec1_1);
+				printf("subvec\n");
+				printx(subvec);
 			    r_numvec1 = vbslq_u64(vcgtq_u64(r_numvec1, numvec2_1), r_numvec1, subvec );
+				printf("blend\n");
+				printx(r_numvec1);
 
 			    subvec = vsubq_u64(r_numvec2, numvec1_2);
 			    r_numvec2 = vbslq_u64(vcgtq_u64(r_numvec2, numvec2_2), r_numvec2, subvec );						
