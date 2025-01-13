@@ -7,6 +7,7 @@
 #include <cstdio>
 #include <pthread.h>
 #include <cstdlib>
+#include <iostream>
 
 #include "cpuconst.h"
 
