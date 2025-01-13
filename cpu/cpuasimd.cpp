@@ -244,8 +244,14 @@ void *thr_func_asimd(void *arg) {
 			for(i59=(PRIME8-24);i59>0;i59--){
 			    
 			    if(i59 < 35){
+					printf("remsbefore\n");
+				for (int a; a < 7; a++)
+				std::cout << rems[a] << std::endl;
 				vst1q_u64( (uint64_t*)rems, r_numvec1);
 				vst1q_u64( (uint64_t*)rrems, r_numvec2);
+					printf("remsafter\n");
+				for (int a; a < 7; a++)
+				std::cout << rems[a] << std::endl;
 				printf("numvec2\n");
 				printx(r_numvec1);
 				printx(r_numvec2);
