@@ -245,10 +245,12 @@ void *thr_func_asimd(void *arg) {
 			    if(i59 < 35){
 				vst1q_u64( (uint64_t*)rems, r_numvec1);
 				vst1q_u64( (uint64_t*)rrems, r_numvec2);
+				printf("store");
 			    }
 
-				//printx(ixOKOK61[rems[0]]);
-				//printx(ixOKOK67[rems[1]]);
+                printf("rems");
+				printx(ixOKOK61[rems[0]]);
+				printx(ixOKOK67[rems[1]]);
 				uint64x2_t isito = vandq_u64( ixOKOK61[rems[0]], ixOKOK67[rems[1]] );
 				printf("1");
 				printx(isito);
