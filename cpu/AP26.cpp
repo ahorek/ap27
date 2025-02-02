@@ -655,11 +655,13 @@ int main(int argc, char *argv[])
 	/* Get search parameters from command line */
 	if(argc < 4){
 		printf("Usage: %s KMIN KMAX SHIFT -cputype -t #\n",argv[0]);
-		#if defined(__aarch64__)
-		  printf("-cputype is used to force an instruction set. Valid types: -asimd. Default is highest available.\n");
-		#else
-		  printf("-cputype is used to force an instruction set. Valid types: -sse2 -sse41 -avx -avx2 -avx512. Default is highest available.\n");
-        #endif
+		printf("-cputype is used to force an instruction set. Valid types: %s. Default is highest available.\n",
+    	#if defined(__aarch64__)
+        	"-asimd"
+    	#else
+        	"-sse2 -sse41 -avx -avx2 -avx512"
+    	#endif
+    	);
 		printf("-t # or --nthreads # is optional number of threads to use. Default is 1. Max is 64.\n");
 
 		exit(EXIT_FAILURE);
@@ -929,10 +931,11 @@ int main(int argc, char *argv[])
 	boinc_fraction_done(1.0);
 	checkpoint(SHIFT,K,1);
 	write_cksum();
-	if(boinc_is_standalone()) {
-		printf("Workunit complete.  Number of AP10+ found %u\n", totalaps);
-	}
-	fprintf(stderr,"Workunit complete.  Number of AP10+ found %u\n", totalaps);
+	const char *msg = "Workunit complete. Number of AP10+ found %u\n";
+    if (boinc_is_standalone()) {
+        printf(msg, totalaps);
+    }
+    fprintf(stderr, msg, totalaps);
 	boinc_end_critical_section();
 
 	free(n43_h);
