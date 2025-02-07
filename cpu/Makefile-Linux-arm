@@ -13,20 +13,20 @@ BOINC_INC = -I$(BOINC_DIR)/lib -I$(BOINC_DIR)/api -I$(BOINC_DIR)
 BOINC_LIB = -L$(BOINC_DIR)/lib -L$(BOINC_DIR)/api -L$(BOINC_DIR) -lboinc_api -lboinc -lstdc++ -ldl
 
 DFLAGS =
-CFLAGS = -I . -O3 -m64 -DVERS=\"$(VER)\"
+CFLAGS = -I . -O3 -DVERS=\"$(VER)\"
 LDFLAGS = $(CFLAGS) -static
 
 all : $(APP)
 
 $(APP) : $(OBJ)
-        $(LD) $(LDFLAGS) $^ $(BOINC_LIB) -o $@
+	$(LD) $(LDFLAGS) $^ $(BOINC_LIB) -o $@
 
 AP26.o : $(SRC)
-        $(CC) $(DFLAGS) $(CFLAGS) $(BOINC_INC) -c -o $@ AP26.cpp
+	$(CC) $(DFLAGS) $(CFLAGS) $(BOINC_INC) -c -o $@ AP26.cpp
 
 cpuasimd.o : cpuasimd.cpp
-        $(CC) $(DFLAGS) $(CFLAGS) -c -o $@ $^
+	$(CC) $(DFLAGS) $(CFLAGS) -c -o $@ $^
 
 clean :
-        rm -f *.o $(APP)
+	rm -f *.o $(APP)
 
