@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { variant: 'cpu aarch64', os: 'ubuntu-latest', working-directory: './cpu/Makefile-Linux-arm', makefile: 'Makefile_arm' }
+          - { variant: 'cpu aarch64', os: 'ubuntu-latest', working-directory: './cpu', makefile: 'Makefile-Linux-arm' }
 
     steps:
       - uses: actions/checkout@v4
