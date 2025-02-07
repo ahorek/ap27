@@ -47,6 +47,7 @@ jobs:
         working-directory: ${{ matrix.working-directory }}
         run: |
           gsed -i 's/BOINC_DIR\s*=.*$/BOINC_DIR = ..\/boinc/' ${{ matrix.makefile }}
+          gsed -r 's/-static//'  ${{ matrix.makefile }}
           make -f ${{ matrix.makefile }} -j
 
       - name: Upload artifact

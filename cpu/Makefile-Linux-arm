@@ -13,8 +13,8 @@ BOINC_INC = -I$(BOINC_DIR)/lib -I$(BOINC_DIR)/api -I$(BOINC_DIR)
 BOINC_LIB = -L$(BOINC_DIR)/lib -L$(BOINC_DIR)/api -L$(BOINC_DIR) -lboinc_api -lboinc -lstdc++ -ldl -lpthread
 
 DFLAGS =
-CFLAGS = -I . -O3 -flax-vector-conversions -DVERS=\"$(VER)\"
-LDFLAGS = $(CFLAGS)
+CFLAGS = -I . -O3 -s -flax-vector-conversions -DVERS=\"$(VER)\"
+LDFLAGS = $(CFLAGS) -static
 
 all : $(APP)
 
