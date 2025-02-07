@@ -14,7 +14,7 @@ BOINC_LIB = -L$(BOINC_DIR)/lib -L$(BOINC_DIR)/api -L$(BOINC_DIR) -lboinc_api -lb
 
 DFLAGS =
 CFLAGS = -I . -O3 -flax-vector-conversions -DVERS=\"$(VER)\"
-LDFLAGS = $(CFLAGS) -static
+LDFLAGS = $(CFLAGS)
 
 all : $(APP)
 
