@@ -28,7 +28,7 @@ jobs:
       - name: Prepare toolchain
         run: |
           brew update
-          brew install autoconf automake libtool
+          brew install autoconf automake libtool gnu-sed
 
       - name: Print gcc version
         run: |
@@ -55,4 +55,4 @@ jobs:
           name: ${{ matrix.variant }}_${{ matrix.os }}
           retention-days: 1
           path: |
-            ${{ matrix.working-directory }}/*
+            ${{ matrix.working-directory }}/ap26_cpu_*
