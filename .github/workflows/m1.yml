@@ -46,8 +46,7 @@ jobs:
       - name: Run make
         working-directory: ${{ matrix.working-directory }}
         run: |
-          export PATH="/opt/homebrew/opt/libtool/libexec/gnubin:$PATH"
-          sed -i 's/BOINC_DIR\s*=.*$/BOINC_DIR = ..\/boinc/' ${{ matrix.makefile }}
+          gsed -i 's/BOINC_DIR\s*=.*$/BOINC_DIR = ..\/boinc/' ${{ matrix.makefile }}
           make -f ${{ matrix.makefile }} -j
 
       - name: Upload artifact
