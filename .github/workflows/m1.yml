@@ -36,6 +36,7 @@ jobs:
 
       - name: Prepare boinc libraries
         run: |
+          export PATH="/opt/homebrew/opt/libtool/libexec/gnubin:$PATH"
           git clone --depth 1 https://github.com/BOINC/boinc.git
           cd ./boinc
           ./_autosetup
