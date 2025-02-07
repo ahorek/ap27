@@ -1,0 +1,56 @@
+name: m1
+
+on: [push, pull_request]
+
+env:
+  BOINC_DIR: ./boinc
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+
+    name: >-
+      ${{ matrix.variant }} / ${{ matrix.os }}
+
+    defaults:
+      run:
+        shell: bash
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { variant: 'cpu m1', os: 'macos-14', working-directory: './cpu', makefile: 'Makefile-Linux-arm' }
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare toolchain
+        run: |
+          brew update
+
+      - name: Print gcc version
+        run: |
+          g++ -v
+
+      - name: Prepare boinc libraries
+        run: |
+          git clone --depth 1 https://github.com/BOINC/boinc.git
+          cd ./boinc
+          ./_autosetup
+          ./configure --disable-server --disable-manager --disable-client CXXFLAGS="-O3 "
+          make -j
+
+      - name: Run make
+        working-directory: ${{ matrix.working-directory }}
+        run: |
+          sed -i 's/BOINC_DIR\s*=.*$/BOINC_DIR = ..\/boinc/' ${{ matrix.makefile }}
+          make -f ${{ matrix.makefile }} -j
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.variant }}_${{ matrix.os }}
+          retention-days: 1
+          path: |
+            ${{ matrix.working-directory }}/cpu/*

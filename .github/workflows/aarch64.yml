@@ -53,7 +53,7 @@ jobs:
         run: |
           export PATH="/home/runner/work/ap27/ap27/cross-pi-gcc-14.2.0-64/bin:$PATH"
           export PATH="/home/runner/work/ap27/ap27/cross-pi-gcc-14.2.0-64/libexec/gcc/aarch64-linux-gnu/14.2.0:$PATH"
-          sed -i 's/BOINC_DIR\s*=.*$/BOINC_DIR = ..\/..\/boinc/' ${{ matrix.makefile }}
+          sed -i 's/BOINC_DIR\s*=.*$/BOINC_DIR = ..\/boinc/' ${{ matrix.makefile }}
           sed -i 's/CC\s*=.*$/CC = aarch64-linux-gnu-g++/' ${{ matrix.makefile }}
           make -f ${{ matrix.makefile }} -j
 
