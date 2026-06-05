@@ -22,4 +22,5 @@ jobs:
       - name: Print gcc version
         run: |
           uname -a
+          ls -l /etc/ssl/
           openssl s_client -connect asteroidsathome.net:443 -servername asteroidsathome.net -showcerts -verify_return_error -CAfile /etc/ssl/cert.pem
