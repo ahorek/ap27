@@ -22,4 +22,4 @@ jobs:
       - name: Print gcc version
         run: |
           uname -a
-          curl -k -v https://asteroidsathome.net/boinc/
+          CURL_CA_BUNDLE=/etc/ssl/cert.pem curl -v https://asteroidsathome.net
