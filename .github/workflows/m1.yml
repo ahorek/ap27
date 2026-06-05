@@ -22,4 +22,4 @@ jobs:
       - name: Print gcc version
         run: |
           uname -a
-          CURL_CA_BUNDLE=/etc/ssl/cert.pem curl -v https://asteroidsathome.net
+          openssl s_client -connect asteroidsathome.net:443 -servername asteroidsathome.net -showcerts -verify_return_error
