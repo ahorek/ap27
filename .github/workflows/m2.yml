@@ -26,3 +26,5 @@ jobs:
           ls -l /opt/homebrew/etc/openssl@3
           /opt/homebrew/bin/openssl version -a
           openssl s_client -connect asteroidsathome.net:443 -servername asteroidsathome.net -showcerts -verify_return_error -CAfile /opt/homebrew/etc/ca-certificates/cert.pem
+          openssl s_client -connect einsteinathome.org:443 -servername einsteinathome.org -showcerts -verify_return_error -CAfile /opt/homebrew/etc/ca-certificates/cert.pem
+          openssl s_client -connectprimegrid.com:443 -servername primegrid.com -showcerts -verify_return_error -CAfile /opt/homebrew/etc/ca-certificates/cert.pem
