@@ -22,5 +22,4 @@ jobs:
       - name: Print gcc version
         run: |
           uname -a
-          openssl s_client -connect asteroidsathome.net:443 -servername asteroidsathome.net -showcerts -verify_return_error
           grep -i "HARICA TLS RSA Root CA 2021" /etc/ssl/cert.pem
