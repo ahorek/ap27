@@ -22,4 +22,4 @@ jobs:
       - name: Print gcc version
         run: |
           uname -a
-          curl -v https://asteroidsathome.net/boinc/notices.php
+          curl -k -v https://asteroidsathome.net/boinc/
