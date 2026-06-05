@@ -22,4 +22,4 @@ jobs:
       - name: Print gcc version
         run: |
           uname -a
-          openssl s_client -connect asteroidsathome.net:443 -servername asteroidsathome.net -showcerts -verify_return_error -CAfile /opt/homebrew/etc/openssl@3/cert.pem cert.pem
+          openssl s_client -connect asteroidsathome.net:443 -servername asteroidsathome.net -showcerts -verify_return_error -CAfile /opt/homebrew/etc/openssl@3/cert.pem
