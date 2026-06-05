@@ -7,7 +7,7 @@ env:
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-15
 
     name: >-
       macOS 14
@@ -22,4 +22,4 @@ jobs:
       - name: Print gcc version
         run: |
           uname -a
-          CURL_SSL_BACKEND=secure-transport curl -v https://asteroidsathome.net/boinc/notices.php --http1.1
+          openssl s_client -connect asteroidsathome.net:443 -servername asteroidsathome.net -showcerts
