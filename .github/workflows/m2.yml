@@ -25,4 +25,4 @@ jobs:
           ls -l /etc/ssl/
           ls -l /opt/homebrew/etc/openssl@3
           /opt/homebrew/bin/openssl version -a
-          openssl s_client -connect asteroidsathome.net:443 -servername asteroidsathome.net -showcerts -verify_return_error -CAfile /etc/ssl/cert.pem
+          openssl s_client -connect asteroidsathome.net:443 -servername asteroidsathome.net -showcerts -verify_return_error -CAfile /opt/homebrew/etc/ca-certificates/cert.pem
