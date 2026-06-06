@@ -24,6 +24,7 @@ jobs:
           uname -a
           ls -l /etc/ssl/
           ls -l /opt/homebrew/etc/openssl@3
+          curl -v
           /opt/homebrew/bin/openssl version -a
           openssl s_client -connect asteroidsathome.net:443 -servername asteroidsathome.net -showcerts -verify_return_error -CAfile /opt/homebrew/etc/ca-certificates/cert.pem
           openssl s_client -connect einsteinathome.org:443 -servername einsteinathome.org -showcerts -verify_return_error -CAfile /opt/homebrew/etc/ca-certificates/cert.pem
