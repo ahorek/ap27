@@ -24,7 +24,7 @@ KERNEL_HEADERS = kernels/checkn.h kernels/offset.h kernels/setupok.h kernels/set
 
 OBJ = AP26.o simpleCL.o
 
-BOINC_DIR = /Volumes/Beta\ Testing/Users/testing/Documents/boinc-master
+BOINC_DIR = /home/bryan/boinc
 
 BOINC_INC = -I$(BOINC_DIR)/api -I$(BOINC_DIR)/lib -I$(BOINC_DIR)
 
