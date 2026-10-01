@@ -44,7 +44,7 @@ simpleCL.o : $(SRC)
 	$(CC) $(DFLAGS) $(CFLAGS) $(BOINC_INC) -c -o $@ simpleCL.c
 
 .cl.h:
-	./cltoh.pl $< > $@
+	perl cltoh.pl $< > $@
 
 clean :
 	rm -f *.o kernels/*.h $(APP)
