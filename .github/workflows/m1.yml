@@ -4,6 +4,7 @@ on: [push, pull_request]
 
 env:
   BOINC_DIR: ./boinc
+  MACOSX_DEPLOYMENT_TARGET: "11.0"
 
 jobs:
   build:
@@ -20,7 +21,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { variant: 'cpu m1', os: 'macos-14', working-directory: './cpu', makefile: 'Makefile-Linux-arm' }
+          - { variant: 'cpu m1', os: 'macos-15', working-directory: './cpu', makefile: 'Makefile-Linux-arm' }
+          - { variant: 'gpu m1', os: 'macos-15', working-directory: './opencl', makefile: 'Makefile-mac-arm' }
 
     steps:
       - uses: actions/checkout@v4
@@ -56,4 +58,4 @@ jobs:
           name: ${{ matrix.variant }}_${{ matrix.os }}
           retention-days: 1
           path: |
-            ${{ matrix.working-directory }}/ap26_cpu_*
+            ${{ matrix.working-directory }}/ap26_*
