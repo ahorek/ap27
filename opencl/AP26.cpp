@@ -703,7 +703,7 @@ int main(int argc, char *argv[])
 	int retval = 0;
 	retval = boinc_get_opencl_ids(argc, argv, 0, &device, &platform);
 	if (retval) {
-		if(boinc_is_standalone()){
+		//if(boinc_is_standalone()){
 			printf("init_data.xml not found, using device 0.\n");
 
 			err = clGetPlatformIDs(1, &platform, NULL);
@@ -716,11 +716,11 @@ int main(int argc, char *argv[])
 				printf( "clGetDeviceIDs() failed with %d\n", err );
 				exit(EXIT_FAILURE);
 			}
-		}
-		else{
-			fprintf(stderr, "Error: boinc_get_opencl_ids() failed with error %d\n", retval );
-			exit(EXIT_FAILURE);
-		}
+		//}
+		//else{
+		//	fprintf(stderr, "Error: boinc_get_opencl_ids() failed with error %d\n", retval );
+		//	exit(EXIT_FAILURE);
+		//}
 	}
 
 	cl_context_properties cps[3] = { CL_CONTEXT_PLATFORM, (cl_context_properties)platform, 0 };
